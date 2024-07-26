@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgb(20, 43, 77); /* Azul sólido */
+  }
+  
+  #title-container {
+    background-color: rgb(20, 43, 77); /* Color lápiz lazuli */
+    color: hsl(0, 0%, 100%);
+    text-align: left;
+    padding: 14px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Asegura que el título esté encima del mapa */
+  }
+  
+  #map-title {
+    margin: 0;
+    font-size: 30px; /* Ajusta el tamaño según prefieras */
+    font-family: Arial, sans-serif; /* Fuente del título */
+  }
+
+  #subtitle {
+    margin: 0;
+    font-size: 18px; /* Ajusta el tamaño según prefieras */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, sans-serif; /* Fuente del título */
+  }
+
+  #map {
+    margin-top: 1000px; /* Espacio para el título */
+    height: 500vh; /* Ocupa el alto total de la ventana */
+  }
+
+  /* Estilo para el logo */
+#logo {
+    position: absolute; /* Permite colocar el logo en una posición específica dentro del contenedor */
+    top: 50%; /* Centra verticalmente el logo en el contenedor */
+    right: 70px; /* Coloca el logo a 10 píxeles desde el borde derecho del contenedor */
+    transform: translateY(-50%); /* Ajusta el logo para que esté centrado verticalmente */
+    height: 80px; /* Ajusta la altura del logo según prefieras */
+  }
+#logo1 {
+    position: absolute; /* Permite colocar el logo en una posición específica dentro del contenedor */
+    top: 50%; /* Centra verticalmente el logo en el contenedor */
+    right: 160px; /* Coloca el logo a 10 píxeles desde el borde derecho del contenedor */
+    transform: translateY(-50%); /* Ajusta el logo para que esté centrado verticalmente */
+    height: 80px; /* Ajusta la altura del logo según prefieras */
+  }  
+  
+  /* Estilo para el mapa */
+  #map {
+    margin-top: 100px; /* Asegura que el mapa no se superponga con el título y el logo */
+    height: 100vh; /* Ocupa el alto total de la ventana */
+  }
+  #map, .leaflet-container, .leaflet-pane, .leaflet-tile, .leaflet-marker-pane, .leaflet-shadow-pane, .leaflet-overlay-pane, .leaflet-popup-pane, .leaflet-map-pane, .leaflet-control-container {
+    background-color: rgb(20, 43, 77); /* Azul sólido */
