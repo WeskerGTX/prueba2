@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.css" />
+    
+    <style>
+        html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+#map {
+  height: 600px;
+}
+  #container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#header {
+  background-color: rgb(20, 43, 77);
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+#header img {
+  height: 75px;
+  width: auto;
+}
+#logo-left {
+  position: absolute;
+  left: 10px;
+}
+#logo-right {
+  position: absolute;
+  right: 10px;
+}
+#titles {
+  text-align: center;
+  flex: 1;
+  margin: 0 100px;
+}
+#titles h1, #titles h2 {
+  margin: 0;
+}
+#map-container {
+  display: flex;
+  flex: 1;
+}
+#map {
+  flex: 4;
+  height: 100%;
+}
+#controls {
+  flex: 1;
+  background: gray;
+  padding: 10px;
+  border-left: 1px solid black;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  
+}
+.upload-container, .filter-container {
+  margin-bottom: 10px;
+}
+.upload-container label, .filter-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: white;
+}
+.upload-container input, .filter-container select {
+  font-size: 16px;
+  width: 100%;
+}
+.filter-container select {
+  text-transform: uppercase; /* Hace que el texto en los select esté en mayúsculas */
+}
+#search-input {
+  width: 98%; /* Ajusta el ancho para el botón */
+  margin-right: 10px;
+  display: inline-block; /* Asegura que el campo de búsqueda y el botón se alineen */
+  
+}
+
+#search-btn {
+  width: 100%; /* Hace que el botón de búsqueda ocupe el ancho completo disponible */
+  background-color: #0a680d;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; /* Asegura que el botón de búsqueda y el campo de búsqueda se alineen */
+  box-sizing: border-box; /* Incluye padding y border en el ancho del botón */
+  margin-left: 0px; /* Espacio entre el campo de búsqueda y el botón */
+  margin-top: 20px; /* Baja el botón 20 píxeles */
+}
+
+#search-btn:hover {
+  background-color: #45a049;
+}
+#clear-filters {
+  margin-top: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+#clear-filters:hover {
+  background-color: #d32f2f;
+}
+select {
+  color: black;
+}
+.awesomplete {
+  color: black;
+}
+#totals {
+  margin-top: 380px;
+  font-weight: bold;
+  font-size: larger;
+  color: white;
+  position: relative;
+}
+        html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+#map {
+  height: 600px;
+}
+  #container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#header {
+  background-color: rgb(20, 43, 77);
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+#header img {
+  height: 75px;
+  width: auto;
+}
+#logo-left {
+  position: absolute;
+  left: 10px;
+}
+#logo-right {
+  position: absolute;
+  right: 10px;
+}
+#titles {
+  text-align: center;
+  flex: 1;
+  margin: 0 100px;
+}
+#titles h1, #titles h2 {
+  margin: 0;
+}
+#map-container {
+  display: flex;
+  flex: 1;
+}
+#map {
+  flex: 4;
+  height: 100%;
+}
+#controls {
+  flex: 1;
+  background: gray;
+  padding: 10px;
+  border-left: 1px solid black;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  
+}
+.upload-container, .filter-container {
+  margin-bottom: 10px;
+}
+.upload-container label, .filter-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: white;
+}
+.upload-container input, .filter-container select {
+  font-size: 16px;
+  width: 100%;
+}
+.filter-container select {
+  text-transform: uppercase; /* Hace que el texto en los select esté en mayúsculas */
+}
+#search-input {
+  width: 98%; /* Ajusta el ancho para el botón */
+  margin-right: 10px;
+  display: inline-block; /* Asegura que el campo de búsqueda y el botón se alineen */
+  
+}
+
+#search-btn {
+  width: 100%; /* Hace que el botón de búsqueda ocupe el ancho completo disponible */
+  background-color: #0a680d;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; /* Asegura que el botón de búsqueda y el campo de búsqueda se alineen */
+  box-sizing: border-box; /* Incluye padding y border en el ancho del botón */
+  margin-left: 0px; /* Espacio entre el campo de búsqueda y el botón */
+  margin-top: 20px; /* Baja el botón 20 píxeles */
+}
+
+#search-btn:hover {
+  background-color: #45a049;
+}
+#clear-filters {
+  margin-top: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+#clear-filters:hover {
+  background-color: #d32f2f;
+}
+select {
+  color: black;
+}
+.awesomplete {
+  color: black;
+}
+#totals {
+  margin-top: 380px;
+  font-weight: bold;
+  font-size: larger;
+  color: white;
+  position: relative;
+}
+        html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+#map {
+  height: 600px;
+}
+  #container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#header {
+  background-color: rgb(20, 43, 77);
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+#header img {
+  height: 75px;
+  width: auto;
+}
+#logo-left {
+  position: absolute;
+  left: 10px;
+}
+#logo-right {
+  position: absolute;
+  right: 10px;
+}
+#titles {
+  text-align: center;
+  flex: 1;
+  margin: 0 100px;
+}
+#titles h1, #titles h2 {
+  margin: 0;
+}
+#map-container {
+  display: flex;
+  flex: 1;
+}
+#map {
+  flex: 4;
+  height: 100%;
+}
+#controls {
+  flex: 1;
+  background: gray;
+  padding: 10px;
+  border-left: 1px solid black;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  
+}
+.upload-container, .filter-container {
+  margin-bottom: 10px;
+}
+.upload-container label, .filter-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: white;
+}
+.upload-container input, .filter-container select {
+  font-size: 16px;
+  width: 100%;
+}
+.filter-container select {
+  text-transform: uppercase; /* Hace que el texto en los select esté en mayúsculas */
+}
+#search-input {
+  width: 98%; /* Ajusta el ancho para el botón */
+  margin-right: 10px;
+  display: inline-block; /* Asegura que el campo de búsqueda y el botón se alineen */
+  
+}
+
+#search-btn {
+  width: 100%; /* Hace que el botón de búsqueda ocupe el ancho completo disponible */
+  background-color: #0a680d;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; /* Asegura que el botón de búsqueda y el campo de búsqueda se alineen */
+  box-sizing: border-box; /* Incluye padding y border en el ancho del botón */
+  margin-left: 0px; /* Espacio entre el campo de búsqueda y el botón */
+  margin-top: 20px; /* Baja el botón 20 píxeles */
+}
+
+#search-btn:hover {
+  background-color: #45a049;
+}
+#clear-filters {
+  margin-top: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+#clear-filters:hover {
+  background-color: #d32f2f;
+}
+select {
+  color: black;
+}
+.awesomplete {
+  color: black;
+}
+#totals {
+  margin-top: 380px;
+  font-weight: bold;
+  font-size: larger;
+  color: white;
+  position: relative;
+}
+        html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+#map {
+  height: 600px;
+}
+  #container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#header {
+  background-color: rgb(20, 43, 77);
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+#header img {
+  height: 75px;
+  width: auto;
+}
+#logo-left {
+  position: absolute;
+  left: 10px;
+}
+#logo-right {
+  position: absolute;
+  right: 10px;
+}
+#titles {
+  text-align: center;
+  flex: 1;
+  margin: 0 100px;
+}
+#titles h1, #titles h2 {
+  margin: 0;
+}
+#map-container {
+  display: flex;
+  flex: 1;
+}
+#map {
+  flex: 4;
+  height: 100%;
+}
+#controls {
+  flex: 1;
+  background: gray;
+  padding: 10px;
+  border-left: 1px solid black;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  
+}
+.upload-container, .filter-container {
+  margin-bottom: 10px;
+}
+.upload-container label, .filter-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: white;
+}
+.upload-container input, .filter-container select {
+  font-size: 16px;
+  width: 100%;
+}
+.filter-container select {
+  text-transform: uppercase; /* Hace que el texto en los select esté en mayúsculas */
+}
+#search-input {
+  width: 98%; /* Ajusta el ancho para el botón */
+  margin-right: 10px;
+  display: inline-block; /* Asegura que el campo de búsqueda y el botón se alineen */
+  
+}
+
+#search-btn {
+  width: 100%; /* Hace que el botón de búsqueda ocupe el ancho completo disponible */
+  background-color: #0a680d;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; /* Asegura que el botón de búsqueda y el campo de búsqueda se alineen */
+  box-sizing: border-box; /* Incluye padding y border en el ancho del botón */
+  margin-left: 0px; /* Espacio entre el campo de búsqueda y el botón */
+  margin-top: 20px; /* Baja el botón 20 píxeles */
+}
+
+#search-btn:hover {
+  background-color: #45a049;
+}
+#clear-filters {
+  margin-top: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+#clear-filters:hover {
+  background-color: #d32f2f;
+}
+select {
+  color: black;
+}
+.awesomplete {
+  color: black;
+}
+#totals {
+  margin-top: 380px;
+  font-weight: bold;
+  font-size: larger;
+  color: white;
+  position: relative;
+}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <img id="logo-left" src="https://github.com/WeskerGTX/CSV_PRUEBA/raw/main/logo.png">
+            <div id="titles">
+                <h1>División ESTADISTICA CRIMINAL</h1>
+                <h2>Despliegue Territorial POLICIA FEDERAL ARGENTINA</h2>
+            </div>
+            <img id="logo-right" src="https://github.com/WeskerGTX/CSV_PRUEBA/raw/main/logo1.png">
+        </div>
+        <div id="map-container">
+            <div id="map"></div>
+            <div id="controls">
+                <div class="filter-container">
+                    <label for="superintendencia">Filtrar por Superintendencia:</label>
+                    <select id="superintendencia">
+                        <option value="">Seleccionar</option>
+                    </select>
+                </div>
+                <div class="filter-container">
+                    <label for="provincia">Filtrar por Provincia:</label>
+                    <select id="provincia">
+                        <option value="">Seleccionar</option>
+                    </select>
+                </div>
+                <div class="filter-container">
+                    <label for="search-input">Buscar Dependencia:</label>
+                    <input id="search-input" type="text" placeholder="Escriba dependencia..." />
+                    <button id="search-btn">Buscar</button>
+                </div>
+                <button id="clear-filters">Borrar filtros</button>
+                <div id="totals">
+                    <p><strong>Total Personal:</strong> <span id="total-personal">0</span></p>
+                    <p><strong>Total Móviles:</strong> <span id="total-moviles">0</span></p>
+                    <p><strong>Total Armas:</strong> <span id="total-armas">0</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+    <script>
+        var map = L.map('map').setView([-34.603722, -58.381592], 5); // Buenos Aires
+        L.tileLayer('https://wms.ign.gob.ar/geoserver/gwc/service/tms/1.0.0/capabaseargenmap@EPSG:3857@png/{z}/{x}/{-y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.ign.gob.ar">IGN Argentina</a>'
+        }).addTo(map);
+
+        var layerGroup = L.layerGroup().addTo(map);
+        var markers = {};
+        var allMarkers = [];
+        var superintendencias = {};
+        var dependencias = [];
+
+        // Colores predefinidos para superintendencias
+        var coloresSuperintendencias = {
+            "AGENCIAS FEDERALES": "#003366", // Azul oscuro
+            "FEDERAL DE BOMBEROS": "#FF0000", // Rojo
+            "DROGAS PELIGROSAS": "#FFA500", // Naranja
+            "FEDERAL DE POLICIA CIENTIFICA": "#006400" // Verde oscuro
+        };
+
+        function generarColores(num) {
+            return Array.from({ length: num }, () => `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`);
+        }
+
+        var colores = generarColores(50);
+
+        function cargarCSV() {
+            Papa.parse('https://raw.githubusercontent.com/WeskerGTX/CSV_PRUEBA/main/Despliegue-Qgis-mapeo.csv', {
+                header: true,
+                dynamicTyping: true,
+                download: true,
+                complete: function(results) {
+                    layerGroup.clearLayers();
+                    markers = {};
+                    allMarkers = [];
+                    superintendencias = {};
+                    dependencias = [];
+
+                    limpiarFiltros();
+
+                    results.data.forEach(row => {
+                        if (row.LATITUD && row.LONGITUD && row.SUPERINTENDENCIA && row.PROVINCIA) {
+                            if (!superintendencias[row.SUPERINTENDENCIA]) {
+                                // Asignar colores predefinidos si están disponibles, o colores aleatorios
+                                superintendencias[row.SUPERINTENDENCIA] = coloresSuperintendencias[row.SUPERINTENDENCIA] || colores[Object.keys(superintendencias).length];
+                                agregarFiltro('superintendencia', row.SUPERINTENDENCIA);
+                            }
+                            var color = superintendencias[row.SUPERINTENDENCIA];
+                            var marker = L.circleMarker([row.LATITUD, row.LONGITUD], {
+                                radius: 8,
+                                fillColor: color,
+                                color: 'white',
+                                weight: 2,
+                                fillOpacity: 1,
+                                stroke: true,
+                                opacity: 0.9
+                            }).bindPopup(`
+                                <strong>Superintendencia:</strong> ${row.SUPERINTENDENCIA}<br>
+                                <strong>Dependencia:</strong> ${row.DEPENDENCIA}<br>
+                                <strong>Código de Dependencia:</strong> ${row.COD_DEP}<br>
+                                <strong>Dirección:</strong> ${row.DIRECCION}<br>
+                                <strong>Provincia:</strong> ${row.PROVINCIA}<br>
+                                <strong>Personal:</strong> ${row.PERSONAL}<br>
+                                <strong>Móviles:</strong> ${row.MOVILES}<br>
+                                <strong>Armas:</strong> ${row.ARMAS}
+                            `);
+
+                            markers[row.DEPENDENCIA] = marker;
+                            allMarkers.push({ marker, superintendencia: row.SUPERINTENDENCIA, provincia: row.PROVINCIA, dependencia: row.DEPENDENCIA, personal: row.PERSONAL, moviles: row.MOVILES, armas: row.ARMAS });
+
+                            agregarFiltro('provincia', row.PROVINCIA);
+
+                            if (!dependencias.includes(row.DEPENDENCIA)) {
+                                dependencias.push(row.DEPENDENCIA);
+                            }
+                        }
+                    });
+
+                    new Awesomplete(document.getElementById('search-input'), {
+                        list: dependencias,
+                        minChars: 1
+                    });
+
+                    filtrarMapa();
+                    actualizarTotales();
+                }
+            });
+        }
+
+        function agregarFiltro(filtroId, valor) {
+            var select = document.getElementById(filtroId);
+            if (select && !Array.from(select.options).some(option => option.value === valor)) {
+                var option = document.createElement('option');
+                option.value = valor;
+                option.textContent = valor;
+                select.appendChild(option);
+            }
+        }
+
+        function limpiarFiltros() {
+            document.querySelectorAll('#controls select').forEach(select => {
+                select.innerHTML = '<option value="">Seleccionar</option>';
+            });
+        }
+
+        function filtrarMapa() {
+            var superintendencia = document.getElementById('superintendencia').value;
+            var provincia = document.getElementById('provincia').value;
+            var bounds = new L.LatLngBounds();
+
+            allMarkers.forEach(({ marker, superintendencia: sup, provincia: prov }) => {
+                if ((superintendencia === "" || superintendencia === sup) &&
+                    (provincia === "" || provincia === prov)) {
+                    marker.addTo(layerGroup);
+                    bounds.extend(marker.getLatLng());
+                } else {
+                    marker.removeFrom(layerGroup);
+                }
+            });
+
+            if (bounds.isValid()) {
+                map.fitBounds(bounds);
+            } else {
+                map.setView([-34.603722, -58.381592], 5);
+            }
+
+            actualizarTotales();
+        }
+
+        function buscarDependencia() {
+            var input = document.getElementById('search-input').value.toLowerCase();
+            var bounds = new L.LatLngBounds();
+            allMarkers.forEach(({ marker, dependencia }) => {
+                if (dependencia.toLowerCase().includes(input)) {
+                    marker.addTo(layerGroup);
+                    bounds.extend(marker.getLatLng());
+                } else {
+                    marker.removeFrom(layerGroup);
+                }
+            });
+
+            if (bounds.isValid()) {
+                map.fitBounds(bounds);
+            } else {
+                map.setView([-34.603722, -58.381592], 5);
+            }
+
+            actualizarTotales();
+        }
+
+        function actualizarTotales() {
+            var totalPersonal = 0;
+            var totalMoviles = 0;
+            var totalArmas = 0;
+
+            allMarkers.forEach(({ marker, personal, moviles, armas }) => {
+                if (map.hasLayer(marker)) {
+                    totalPersonal += personal;
+                    totalMoviles += moviles;
+                    totalArmas += armas;
+                }
+            });
+
+            document.getElementById('total-personal').textContent = totalPersonal;
+            document.getElementById('total-moviles').textContent = totalMoviles;
+            document.getElementById('total-armas').textContent = totalArmas;
+        }
+
+        document.getElementById('superintendencia').addEventListener('change', filtrarMapa);
+        document.getElementById('provincia').addEventListener('change', filtrarMapa);
+        document.getElementById('search-btn').addEventListener('click', buscarDependencia);
+        document.getElementById('clear-filters').addEventListener('click', function() {
+            document.getElementById('superintendencia').value = "";
+            document.getElementById('provincia').value = "";
+            document.getElementById('search-input').value = "";
+            filtrarMapa();
+        });
+
+        // Cargar datos al iniciar
+        cargarCSV();
+    </script>
+</body>
+</html>
